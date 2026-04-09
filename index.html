@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DBMS project</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Plus+Jakarta+Sans:wght@500;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* CSS VARIABLES */
+      :root {
+        --deep: #020617;
+        --emerald: #10b981;
+        --royal: #0062ff;
+        --gold: #fbbf24;
+        --cyan: #00d2ff;
+        --glass: rgba(255, 255, 255, 0.03);
+      }
+
+      /* PAGE SETUP */
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--deep);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Changed to auto to allow the footer spacing to work */
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      /* DYNAMIC BACKGROUND BLOBS */
+      .background-blobs {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background:
+          radial-gradient(circle at 15% 15%, #064e3b 0%, transparent 35%),
+          radial-gradient(circle at 85% 85%, #1e3a8a 0%, transparent 35%);
+        filter: blur(100px);
+        animation: pulseBg 10s ease-in-out infinite alternate;
+      }
+
+      @keyframes pulseBg {
+        from {
+          opacity: 0.6;
+          transform: scale(1);
+        }
+        to {
+          opacity: 0.9;
+          transform: scale(1.1);
+        }
+      }
+
+      .container {
+        width: 95%;
+        max-width: 1100px;
+        position: relative;
+        z-index: 10;
+        padding-top: 80px; /* Space from top */
+      }
+
+      /* HEADER SECTION */
+      header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .tagline {
+        color: var(--emerald);
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+      }
+
+      .main-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(2.5rem, 8vw, 4.5rem);
+        font-weight: 900;
+        margin: 0;
+        background: linear-gradient(to right, #fff, var(--gold), #fff);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 5s linear infinite;
+      }
+
+      @keyframes shimmer {
+        to {
+          background-position: 200% center;
+        }
+      }
+
+      .accent-bar {
+        width: 80px;
+        height: 4px;
+        background: var(--emerald);
+        margin: 20px auto;
+        border-radius: 10px;
+        box-shadow: 0 0 15px var(--emerald);
+      }
+
+      /* STUDENT INFO BAR */
+      .user-info-bar {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 60px;
+      }
+
+      .info-pill {
+        background: var(--glass);
+        padding: 10px 22px;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.85rem;
+        backdrop-filter: blur(12px);
+        transition: 0.3s;
+      }
+
+      .info-pill:hover {
+        border-color: var(--gold);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .info-pill span {
+        color: var(--gold);
+        font-weight: 800;
+        margin-right: 5px;
+      }
+
+      /* PORTAL CARDS */
+      .portal-grid {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        perspective: 1000px;
+      }
+
+      .portal-card {
+        position: relative;
+        width: 340px;
+        padding: 60px 30px;
+        background: var(--glass);
+        border-radius: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        text-decoration: none;
+        color: white;
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        backdrop-filter: blur(20px);
+        text-align: center;
+        overflow: hidden;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .plsql-card {
+        animation-delay: 3s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .portal-card:hover {
+        transform: translateY(-25px) scale(1.03) rotateX(5deg);
+        border-color: var(--gold);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+      }
+
+      /* INNER CARD GLOW */
+      .card-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at center,
+          var(--royal),
+          transparent 70%
+        );
+        opacity: 0;
+        transition: 0.6s;
+        z-index: 1;
+      }
+      .portal-card:hover .card-glow {
+        opacity: 0.25;
+      }
+
+      .card-content {
+        position: relative;
+        z-index: 5;
+      }
+
+      .icon-box {
+        width: 90px;
+        height: 90px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 30px;
+        font-weight: 900;
+        font-size: 1.2rem;
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        transform: rotate(-5deg);
+        transition: 0.4s;
+      }
+      .portal-card:hover .icon-box {
+        transform: rotate(0deg) scale(1.1);
+        box-shadow: 0 0 20px var(--gold);
+      }
+
+      .portal-card h2 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+        letter-spacing: 1px;
+      }
+
+      .portal-card p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 35px;
+      }
+
+      .access-btn {
+        display: inline-block;
+        padding: 14px 32px;
+        border-radius: 50px;
+        border: 2px solid var(--emerald);
+        color: var(--emerald);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        transition: 0.4s;
+      }
+
+      .portal-card:hover .access-btn {
+        background: var(--emerald);
+        color: var(--deep);
+        box-shadow: 0 0 20px var(--emerald);
+      }
+
+      /* FOOTER SPACING & STYLE */
+      .footer-spacer {
+        height: 150px; /* The scrollable space at the bottom */
+        width: 100%;
+      }
+
+      footer {
+        padding: 40px 0;
+        width: 100%;
+        text-align: center;
+        opacity: 0.4;
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 850px) {
+        .portal-grid {
+          flex-direction: column;
+          align-items: center;
+        }
+        .background-blobs {
+          filter: blur(60px);
+        }
+        body {
+          padding: 40px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-blobs"></div>
+
+    <div class="container">
+      <header>
+        <p class="tagline">Database Management System</p>
+        <h1 class="main-title">DBMS PROJECT</h1>
+        <div class="accent-bar"></div>
+      </header>
+
+      <div class="user-info-bar">
+        <div class="info-pill"><span>Student:</span> Raj</div>
+        <div class="info-pill"><span>Roll:</span> 7059/24</div>
+        <div class="info-pill"><span>Class:</span> BCA IV SEM</div>
+        <div class="info-pill"><span>Submitted To:</span> MR. Chetan Gupta</div>
+      </div>
+
+      <div class="portal-grid">
+        <a href="indexS.html" class="portal-card">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="icon-box">SQL</div>
+            <h2>Structured Query Language</h2>
+            <p>
+              DDL, DML, Transaction Control, and Advanced Multi-table Joins.
+            </p>
+            <div class="access-btn">View Query</div>
+          </div>
+        </a>
+
+        <a href="indexPl.html" class="portal-card plsql-card">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="icon-box">PL/SQL</div>
+            <h2>Procedural SQL</h2>
+            <p>Database Triggers, Cursors, Packages, and Stored Procedures.</p>
+            <div class="access-btn">View Query</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="footer-spacer"></div>
+    </div>
+
+    <footer>Made By Raj</footer>
+  </body>
+</html>
+
+

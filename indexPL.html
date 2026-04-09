@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PL/SQL Portal | Aurora Edition</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Plus+Jakarta+Sans:wght@500;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --deep: #020617;
+        --emerald: #10b981;
+        --gold: #fbbf24;
+        --glass: rgba(255, 255, 255, 0.03);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--deep);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+      }
+      .background-blobs {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: radial-gradient(
+          circle at 90% 10%,
+          #064e3b 0%,
+          transparent 40%
+        );
+        filter: blur(100px);
+      }
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        padding: 60px 0;
+      }
+      header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      .tagline {
+        color: var(--emerald);
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+      .main-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin: 10px 0;
+        background: linear-gradient(to right, #fff, var(--gold), #fff);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 5s linear infinite;
+      }
+      @keyframes shimmer {
+        to {
+          background-position: 200% center;
+        }
+      }
+
+      .topic-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 50px;
+      }
+      .topic-card {
+        background: var(--glass);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 30px;
+        text-decoration: none;
+        color: white;
+        backdrop-filter: blur(15px);
+        transition: all 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .topic-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--gold);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+      .icon-sm {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: rgba(16, 185, 129, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--emerald);
+        font-weight: 900;
+        margin-bottom: 15px;
+        border: 1px solid var(--emerald);
+      }
+      .topic-card h3 {
+        font-family: "Montserrat", sans-serif;
+        margin: 0 0 10px 0;
+        font-size: 1.2rem;
+      }
+      .topic-card p {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        margin: 0;
+      }
+
+  
+
+      .back-btn {
+        display: block;
+        width: fit-content;
+        margin: 40px auto;
+        padding: 12px 35px;
+        border-radius: 50px;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 0.8rem;
+        transition: 0.3s;
+        text-transform: uppercase;
+      }
+      .back-btn:hover {
+        background: var(--gold);
+        color: var(--deep);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-blobs"></div>
+    <div class="container">
+      <header>
+        <p class="tagline">Procedural SQL</p>
+        <h1 class="main-title">PL/SQL TOPICS</h1>
+      </header>
+
+      <div class="topic-grid">
+        <a href="PL_SQL_OUTPUT.html" class="topic-card">
+          <div class="icon-sm">BAS</div>
+          <h3>Basics</h3>
+          <p>Output & Variable Declaration</p>
+        </a>
+
+        <a href="DECISION_CONTROL.html" class="topic-card">
+          <div class="icon-sm">DEC</div>
+          <h3>Decision Control</h3>
+          <p>If-Else & Case Statements</p>
+        </a>
+
+        <a href="LOOPS.html" class="topic-card">
+          <div class="icon-sm">LOP</div>
+          <h3>Iterative Control</h3>
+          <p>For, While & Simple Loops</p>
+        </a>
+
+        <a href="ROW_TYPE.html" class="topic-card">
+          <div class="icon-sm">ATT</div>
+          <h3>Attributes</h3>
+          <p>%Type & %Rowtype usage</p>
+        </a>
+
+        <a href="CURSORS.html" class="topic-card">
+          <div class="icon-sm">CUR</div>
+          <h3>Cursors</h3>
+          <p>Implicit & Explicit Cursors</p>
+        </a>
+
+        <a href="ST_PRO_FUN.html" class="topic-card">
+          <div class="icon-sm">SUB</div>
+          <h3>Subprograms</h3>
+          <p>Procedures & Functions</p>
+        </a>
+
+        <a href="PACKAGES.html" class="topic-card">
+          <div class="icon-sm">PKG</div>
+          <h3>Packages</h3>
+          <p>Bundling Logic Blocks</p>
+        </a>
+
+        <a href="EXCE_HAND.html" class="topic-card">
+          <div class="icon-sm">EXP</div>
+          <h3>Exceptions</h3>
+          <p>Handling Runtime Errors</p>
+        </a>
+
+        <a href="TRIGGERS.html" class="topic-card">
+          <div class="icon-sm">TRG</div>
+          <h3>Triggers</h3>
+          <p>Before & After Triggers</p>
+        </a>
+      </div>
+
+      <a href="index.html" class="back-btn">Return to Portal</a>
+      <div style="height: 100px"></div>
+    </div>
+  </body>
+</html>
